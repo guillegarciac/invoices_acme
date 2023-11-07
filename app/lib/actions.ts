@@ -36,7 +36,7 @@ export async function createInvoice(formData: FormData) {
 }
 
 // Use Zod to update the expected types
-const UpdateInvoice = InvoiceSchema.omit({ id: true, date: true });
+const UpdateInvoice = InvoiceSchema.omit({ date: true, id: true });
  
 // ...
  
@@ -57,4 +57,9 @@ export async function updateInvoice(id: string, formData: FormData) {
  
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');
+}
+ 
+export async function deleteInvoice(id: string) {
+  await sql`DELETE FROM invoices WHERE id = ${id}`;
+  revalidatePath('/dashboard/invoices');
 }
